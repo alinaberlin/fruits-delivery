@@ -10,6 +10,7 @@ import Register from "./components/signin/Register";
 import Map from "./components/Map";
 import OrderEdit from "./components/OrderEdit";
 import OrdersHistory from "./components/OrdersHistory";
+import CardPayment from "./components/paymentMethod/CardPayment";
 
 function App() {
     const isLoggedIn = localStorage.getItem("token");
@@ -23,6 +24,7 @@ function App() {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/map" component={Map} />
+                    <Route exact path="/cardpayment" component={CardPayment} />
                     <Route
                         exact
                         path="/order"

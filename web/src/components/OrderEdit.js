@@ -3,19 +3,22 @@ import { Button, Form } from "react-bootstrap";
 import { API_URL } from "../config";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-
+const PRICE = 10;
 export default class OrderEdit extends Component {
     constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
+        const quantity = this.props.quantity || 1;
+        this.state = {
+            date: this.props.date,
+            customer: this.props.customer,
+            quantity: quantity,
+            method: this.props.method,
+            price: quantity * PRICE
+        };
     }
-    state = {
-        date: this.props.date,
-        customer: this.props.customer,
-        quantity: this.props.quantity,
-        method: this.props.method
-    };
+
     handleSubmit(e) {
         e.preventDefault();
         console.log("save");
@@ -46,6 +49,7 @@ export default class OrderEdit extends Component {
     onChange(event) {
         const state = this.state;
         state[event.target.name] = event.target.value;
+        state.price = this.state.quantity * PRICE;
         this.setState(state);
     }
 
@@ -65,15 +69,15 @@ export default class OrderEdit extends Component {
                 <Form onSubmit={e => this.handleSubmit(e)}>
                     <Form.Group controlId="forDate">
                         <Form.Label>Date</Form.Label>
-                        <Form.Control type="date" name="date" value={this.state.date} onChange={this.onChange} />
+                        <Form.Control type="date" name="date" value={this.state.date} onChange={this.onChange} required />
                     </Form.Group>
                     <Form.Group controlId="forQuantity">
-                        <Form.Label>quantity</Form.Label>
-                        <Form.Control type="number" name="quantity" value={this.state.quantity} onChange={this.onChange} />
+                        <Form.Label>quantity ({this.state.price} &euro;)</Form.Label>
+                        <Form.Control type="number" name="quantity" value={this.state.quantity} onChange={this.onChange} required />
                     </Form.Group>
                     <Form.Group controlId="forMethod">
                         <Form.Label>payment method</Form.Label>
-                        <Form.Control as="select" name="method" value={this.state.method} onChange={this.onChange}>
+                        <Form.Control as="select" name="method" value={this.state.method} onChange={this.onChange} required>
                             <option>cash</option>
                             <option>card</option>
                         </Form.Control>

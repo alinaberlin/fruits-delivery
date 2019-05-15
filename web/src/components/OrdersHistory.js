@@ -1,27 +1,27 @@
 import React, { Component } from "react";
 import { Table } from "react-bootstrap";
+import axios from "axios";
+import { API_URL } from "../config";
 
 export default class OrdersHistory extends Component {
     state = {
         orders: []
     };
     componentDidMount() {
-        let date = new Date();
-        let date2 = new Date();
-        date2.setDate(date2.getDate() + 1);
-        const orders = [
-            {
-                date: date.toDateString(),
-                quantity: 2,
-                method: "cash"
-            },
-            {
-                date: date2.toDateString(),
-                quantity: 3,
-                method: "cash"
-            }
-        ];
-        this.setState({ orders: orders });
+        const url = `${API_URL}/api/order`;
+        const options = {
+            method: "get",
+            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            url
+        };
+        axios(options)
+            .then(res => {
+                console.log(JSON.stringify(res));
+                this.setState({ orders: res.data });
+            })
+            .catch(e => {
+                console.log("Error", e);
+            });
     }
     render() {
         return (

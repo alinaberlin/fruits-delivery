@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Form, InputGroup, Col } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { API_URL } from "../../config";
 import axios from "axios";
 import { Redirect } from "react-router-dom";

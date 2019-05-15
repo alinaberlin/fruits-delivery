@@ -21,6 +21,7 @@ class Register extends Component {
         this.handleAddress = this.handleAddress.bind(this);
         this.onChange = this.onChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.renderRedirect = this.renderRedirect.bind(this);
     }
 
     onChange(event) {
@@ -69,6 +70,12 @@ class Register extends Component {
             });
     }
 
+    renderRedirect() {
+        if (this.state.redirect && !this.props.isLoggedIn) {
+            return <Redirect to="/login" />;
+        }
+    }
+
     handleAddress(address) {
         const state = this.state;
         state.address = address;
@@ -79,6 +86,7 @@ class Register extends Component {
         const { validated } = this.state;
         return (
             <div className="content formClass">
+                {this.renderRedirect()}
                 <Form noValidate validated={validated} onSubmit={e => this.handleSubmit(e)}>
                     <Form.Row>
                         <Form.Group as={Col} md="4" controlId="validationCustomFirstName">

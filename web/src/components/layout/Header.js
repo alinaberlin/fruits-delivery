@@ -43,6 +43,9 @@ class Header extends Component {
         if (this.props.isLoggedIn) {
             return (
                 <Nav className="inline">
+                    <Nav.Link href="/me" className="login">
+                        Profile
+                    </Nav.Link>
                     <Nav.Link href="/login" className="login" onClick={this.logout}>
                         Logout
                     </Nav.Link>

@@ -102,7 +102,9 @@ export default class OrderEdit extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    <Button type="submit">Order</Button>
+                    <Button type="submit" variant="secondary">
+                        Order
+                    </Button>
                 </Form>
             </div>
         );

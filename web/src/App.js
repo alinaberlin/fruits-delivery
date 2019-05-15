@@ -36,6 +36,13 @@ class App extends Component {
                         <Route exact path="/cardpayment" component={CardPayment} />
                         <Route
                             exact
+                            path="/me"
+                            render={props => {
+                                return this.state.isLoggedIn ? <Register {...props} token={this.state.isLoggedIn} /> : <Redirect to="/login" />;
+                            }}
+                        />
+                        <Route
+                            exact
                             path="/order"
                             render={props => {
                                 return this.state.isLoggedIn ? <OrderEdit {...props} /> : <Redirect to="/login" />;

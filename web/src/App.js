@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import "./App.css";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
@@ -12,32 +12,42 @@ import OrderEdit from "./components/OrderEdit";
 import OrdersHistory from "./components/OrdersHistory";
 import CardPayment from "./components/paymentMethod/CardPayment";
 
-function App() {
-    const isLoggedIn = localStorage.getItem("token");
-    return (
-        <div className="App">
-            <Header />
-            <div className="container">
-                <Number />
-                <Switch>
-                    <Route exact path="/" component={Landing} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <Route exact path="/map" component={Map} />
-                    <Route exact path="/cardpayment" component={CardPayment} />
-                    <Route
-                        exact
-                        path="/order"
-                        render={props => {
-                            return isLoggedIn ? <OrderEdit /> : <Redirect to="/login" />;
-                        }}
-                    />
-                    <Route exact path="/orders" component={OrdersHistory} />
-                </Switch>
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { isLoggedIn: localStorage.getItem("token") };
+        this.handleLogin = this.handleLogin.bind(this);
+    }
+
+    handleLogin() {
+        this.setState({ isLoggedIn: localStorage.getItem("token") });
+    }
+    render() {
+        return (
+            <div className="App">
+                <Header isLoggedIn={this.state.isLoggedIn} />
+                <div className="container">
+                    <Number />
+                    <Switch>
+                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/login" render={props => <Login {...props} handleLogin={this.handleLogin} />} />
+                        <Route exact path="/register" component={Register} />
+                        <Route exact path="/map" component={Map} />
+                        <Route exact path="/cardpayment" component={CardPayment} />
+                        <Route
+                            exact
+                            path="/order"
+                            render={props => {
+                                return this.state.isLoggedIn ? <OrderEdit /> : <Redirect to="/login" />;
+                            }}
+                        />
+                        <Route exact path="/orders" component={OrdersHistory} />
+                    </Switch>
+                </div>
+                <Footer />
             </div>
-            <Footer />
-        </div>
-    );
+        );
+    }
 }
 
 export default App;

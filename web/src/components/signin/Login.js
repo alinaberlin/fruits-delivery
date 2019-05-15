@@ -51,6 +51,7 @@ class Login extends Component {
                 console.log(JSON.stringify(res));
                 localStorage.setItem("token", res.data.token);
                 this.setState({ redirect: true });
+                this.props.handleLogin();
             })
             .catch(e => {
                 console.log("Error", e);

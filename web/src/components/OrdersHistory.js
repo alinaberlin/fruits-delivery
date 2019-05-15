@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Table } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../config";
+import { Link } from "react-router-dom";
+import Moment from "moment";
 
 export default class OrdersHistory extends Component {
     state = {
@@ -32,15 +34,19 @@ export default class OrdersHistory extends Component {
                             <th>Date</th>
                             <th>Quantity</th>
                             <th>Payment method</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         {this.state.orders.map((order, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{order.date}</td>
+                                    <td>{Moment(order.date).format("YYYY-MM-DD")}</td>
                                     <td>{order.quantity}</td>
                                     <td>{order.method}</td>
+                                    <td>
+                                        <Link to={`/order/${order._id}`}>Edit</Link>
+                                    </td>
                                 </tr>
                             );
                         })}

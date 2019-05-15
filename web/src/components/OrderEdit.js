@@ -3,7 +3,9 @@ import { Button, Form } from "react-bootstrap";
 import { API_URL } from "../config";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import Moment from "moment";
 const PRICE = 10;
+
 export default class OrderEdit extends Component {
     constructor(props) {
         super(props);
@@ -19,17 +21,34 @@ export default class OrderEdit extends Component {
         };
     }
 
+    componentDidMount() {
+        const params = this.props.match.params;
+        const url = `${API_URL}/api/order/${params.id}`;
+        const options = {
+            method: "get",
+            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            url
+        };
+        axios(options)
+            .then(res => {
+                console.log(JSON.stringify(res));
+                const order = res.data;
+                order.date = Moment(order.date).format("YYYY-MM-DD");
+                this.setState({ ...order });
+            })
+            .catch(e => {
+                console.log("Error", e);
+            });
+    }
     handleSubmit(e) {
         e.preventDefault();
         console.log("save");
-        const url = `${API_URL}/api/order`;
+        const url = this.state._id ? `${API_URL}/api/order/${this.state._id}` : `${API_URL}/api/order`;
         const options = {
-            method: "post",
+            method: this.state._id ? "put" : "post",
             headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
             data: {
-                date: this.state.date,
-                quantity: this.state.quantity,
-                method: this.state.method
+                ...this.state
             },
             url
         };

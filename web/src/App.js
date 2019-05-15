@@ -38,10 +38,23 @@ class App extends Component {
                             exact
                             path="/order"
                             render={props => {
-                                return this.state.isLoggedIn ? <OrderEdit /> : <Redirect to="/login" />;
+                                return this.state.isLoggedIn ? <OrderEdit {...props} /> : <Redirect to="/login" />;
                             }}
                         />
-                        <Route exact path="/orders" component={OrdersHistory} />
+                        <Route
+                            exact
+                            path="/order/:id"
+                            render={props => {
+                                return this.state.isLoggedIn ? <OrderEdit {...props} /> : <Redirect to="/login" />;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/orders"
+                            render={props => {
+                                return this.state.isLoggedIn ? <OrdersHistory {...props} /> : <Redirect to="/login" />;
+                            }}
+                        />
                     </Switch>
                 </div>
                 <Footer />

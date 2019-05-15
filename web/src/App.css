@@ -1,0 +1,65 @@
+.App {
+    text-align: center;
+    background-image: url("/images/tablou.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+}
+
+.Flow {
+    padding-bottom: 20px;
+    margin: 20px 20px 20px 0px;
+    margin-bottom: 30px;
+    color: green;
+    border: 2px;
+    border-style: solid;
+    border-width: 2px;
+    font-style: oblique;
+    background-color: #e6e6e6;
+}
+h2 {
+    text-align: left;
+    padding-bottom: 60px;
+}
+
+.fruits {
+    font-style: oblique;
+    color: darkgreen;
+}
+.login {
+    color: orange !important;
+    font-size: 30px !important;
+}
+.boxed {
+    border: 1px solid green;
+}
+
+.btn-secondary {
+    color: #ffffff;
+    background-color: orange;
+    border-color: orange;
+}
+
+.formClass {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: green;
+    border: 2px;
+    border-style: solid;
+    border-width: 2px;
+    font-style: oblique;
+    background-color: #e6e6e6;
+}
+
+.container {
+    margin-top: 80px;
+    padding-top: 10px;
+    background-color: azure;
+    border-radius: 0.5rem;
+}
+.boxed {
+    font-family: fantasy;
+}

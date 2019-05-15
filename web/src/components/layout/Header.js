@@ -42,15 +42,22 @@ class Header extends Component {
     renderLoginLogout() {
         if (this.props.isLoggedIn) {
             return (
-                <Nav.Link href="/login" className="login" onClick={this.logout}>
-                    Logout
-                </Nav.Link>
+                <Nav className="inline">
+                    <Nav.Link href="/login" className="login" onClick={this.logout}>
+                        Logout
+                    </Nav.Link>
+                </Nav>
             );
         } else {
             return (
-                <Nav.Link href="/login" className="login">
-                    Login
-                </Nav.Link>
+                <Nav className="inline">
+                    <Nav.Link href="/register" className="login">
+                        Register
+                    </Nav.Link>
+                    <Nav.Link href="/login" className="login">
+                        Login
+                    </Nav.Link>
+                </Nav>
             );
         }
     }
@@ -64,7 +71,7 @@ class Header extends Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         {this.renderUserMenu()}
-                        <Nav className="inline">{this.renderLoginLogout()}</Nav>
+                        {this.renderLoginLogout()}
                     </Navbar.Collapse>
                 </Navbar>
             </div>

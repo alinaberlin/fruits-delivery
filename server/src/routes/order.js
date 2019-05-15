@@ -43,18 +43,16 @@ router.post("/order", (req, res, next) => {
 
 router.put("/order/:id", (req, res, next) => {
     const order = req.body;
-    order.costumer = req.user._id;
-    Order.updateOne(order)
+    const id = req.params["id"];
+    delete order._id;
+    console.log("Order", order);
+    Order.findByIdAndUpdate(id, { ...order })
         .then(result => {
-            console.log("order save", result);
             res.json(result);
         })
         .catch(error => {
-            if (error.code === 11000) {
-                res.status(409);
-            } else {
-                res.status(400);
-            }
+            console.log(error);
+            res.status(400);
             res.json(error);
         });
 });

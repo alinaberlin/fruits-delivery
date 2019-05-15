@@ -11,6 +11,7 @@ import Map from "./components/Map";
 import OrderEdit from "./components/OrderEdit";
 import OrdersHistory from "./components/OrdersHistory";
 import CardPayment from "./components/paymentMethod/CardPayment";
+import Profile from "./components/user/Profile";
 
 class App extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class App extends Component {
                             exact
                             path="/me"
                             render={props => {
-                                return this.state.isLoggedIn ? <Register {...props} token={this.state.isLoggedIn} /> : <Redirect to="/login" />;
+                                return this.state.isLoggedIn ? <Profile {...props} token={this.state.isLoggedIn} /> : <Redirect to="/login" />;
                             }}
                         />
                         <Route

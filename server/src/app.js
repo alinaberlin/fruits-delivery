@@ -12,7 +12,7 @@ const WebSocket = require("ws");
 const bodyParser = require("body-parser");
 const user = require("./routes/user");
 const auth = require("./routes/auth");
-const order = require("./routes/order");
+const securedRoutes = require("./routes/secured-routes");
 require("./auth/passport");
 
 const HERE_APP_ID = "sTWYdO0PrgRXmMm1ViBr";
@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
 app.use("/api", user);
-app.use("/api", passport.authenticate("jwt", { session: false }), order);
+app.use("/api", passport.authenticate("jwt", { session: false }), securedRoutes);
 app.use("/auth", auth);
 app.get("/", (req, res) => res.json({ greeting: "Hello World!" }));
 

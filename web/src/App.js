@@ -42,6 +42,7 @@ class App extends Component {
                                 return this.state.isLoggedIn ? <Profile {...props} token={this.state.isLoggedIn} /> : <Redirect to="/login" />;
                             }}
                         />
+
                         <Route
                             exact
                             path="/order"

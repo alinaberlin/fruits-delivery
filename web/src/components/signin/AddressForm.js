@@ -41,7 +41,7 @@ class AddressForm extends Component {
                 }
             })
             .then(function(response) {
-                if (response.data.suggestions.length > 0) {
+                if (response.data.suggestions && response.data.suggestions.length > 0) {
                     const id = response.data.suggestions[0].locationId;
                     const address = response.data.suggestions[0].address;
                     self.props.onAddressChange(address);
@@ -51,8 +51,8 @@ class AddressForm extends Component {
                         locationId: id
                     });
                 } else {
-                    const state = self.getInitialState();
-                    self.setState(state);
+                    //const state = self.getInitialState();
+                    //self.setState(state);
                 }
             });
     }
@@ -104,7 +104,6 @@ class AddressForm extends Component {
                 this.state.address.postalCode +
                 this.state.address.country;
         }
-
         const self = this;
         axios
             .get("https://geocoder.api.here.com/6.2/geocode.json", { params: params })
@@ -112,7 +111,7 @@ class AddressForm extends Component {
                 const view = response.data.Response.View;
                 if (view.length > 0 && view[0].Result.length > 0) {
                     const location = view[0].Result[0].Location;
-                    self.setState({
+                    const state = {
                         isChecked: "true",
                         locationId: "",
                         query: location.Address.Label,
@@ -127,13 +126,18 @@ class AddressForm extends Component {
                             lat: location.DisplayPosition.Latitude,
                             lon: location.DisplayPosition.Longitude
                         }
-                    });
+                    };
+                    const address = state.address;
+                    address.coords = state.coords;
+                    self.props.onAddressChange(address);
+                    self.setState(state);
                 } else {
                     self.setState({ isChecked: true, coords: null });
                 }
             })
             .catch(function(error) {
                 console.log("caught failed query");
+                console.error("check error", error);
                 self.setState({
                     isChecked: true,
                     coords: null
@@ -165,7 +169,7 @@ class AddressForm extends Component {
         let result = this.alert();
         return (
             <div className="container">
-                <AddressSuggest query={this.state.query} onChange={this.onQuery} />
+                <AddressSuggest query={this.state.query} onChange={this.onQuery} onCheck={this.onCheck} />
                 <AddressInput
                     street={this.state.address.street}
                     city={this.state.address.city}

@@ -49,7 +49,15 @@ class Login extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
-                localStorage.setItem("token", res.data.token);
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify({
+                        token: res.data.token,
+                        user: {
+                            isAdmin: res.data.user.admin
+                        }
+                    })
+                );
                 this.props.handleLogin();
                 this.setState({ redirect: true });
             })

@@ -16,12 +16,12 @@ import Profile from "./components/user/Profile";
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { isLoggedIn: localStorage.getItem("token") };
+        this.state = { isLoggedIn: localStorage.getItem("user") };
         this.handleLogin = this.handleLogin.bind(this);
     }
 
     handleLogin() {
-        this.setState({ isLoggedIn: localStorage.getItem("token") });
+        this.setState({ isLoggedIn: localStorage.getItem("user") });
     }
     render() {
         return (

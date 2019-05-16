@@ -25,7 +25,7 @@ export default class OrderEdit extends Component {
         const url = `${API_URL}/api/order/${params.id}`;
         const options = {
             method: "get",
-            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             url
         };
         axios(options)
@@ -44,7 +44,7 @@ export default class OrderEdit extends Component {
         const url = this.state._id ? `${API_URL}/api/order/${this.state._id}` : `${API_URL}/api/order`;
         const options = {
             method: this.state._id ? "put" : "post",
-            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             data: {
                 ...this.state
             },

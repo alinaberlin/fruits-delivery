@@ -31,7 +31,7 @@ export default class CardPayment extends Component {
         const url = `${API_URL}/api/order/${params.orderId}`;
         const options = {
             method: "get",
-            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             url
         };
         console.log("Mount payment");
@@ -96,7 +96,7 @@ export default class CardPayment extends Component {
         order.isPayed = true;
         const options = {
             method: "put",
-            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             data: order,
             url
         };

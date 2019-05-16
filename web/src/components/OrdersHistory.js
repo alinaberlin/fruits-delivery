@@ -13,7 +13,7 @@ export default class OrdersHistory extends Component {
         const url = `${API_URL}/api/order`;
         const options = {
             method: "get",
-            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             url
         };
         axios(options)

@@ -21,14 +21,14 @@ class Header extends Component {
             return (
                 <Nav className="mr-auto">
                     <Link to="/">
-                        <h4 style={{ color: "orange" }}>About us</h4>
+                        <h4  className = 'pix'style={{ color: "orange" }}>About us</h4>
                     </Link>
 
                     <Link to="/orders">
-                        <h4 style={{ color: "orange" }}>My Orders</h4>
+                        <h4 className = 'pix' style={{ color: "orange" }}>My Orders</h4>
                     </Link>
                     <Link to="/order">
-                        <h4 style={{ color: "orange" }}>Order Now</h4>
+                        <h4 className = 'pix' style={{ color: "orange" }}>Order Now</h4>
                     </Link>
                 </Nav>
             );

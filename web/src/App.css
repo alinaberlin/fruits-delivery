@@ -63,3 +63,9 @@ h2 {
 .boxed {
     font-family: fantasy;
 }
+.pix{
+    padding-left: 10px;
+}
+.login{
+    padding-left: 30px;
+}

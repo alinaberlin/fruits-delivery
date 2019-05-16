@@ -11,13 +11,12 @@ export default class OrderEdit extends Component {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.renderRedirect = this.renderRedirect.bind(this);
-        const quantity = this.props.quantity || 1;
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
-            date: this.props.date,
-            customer: this.props.customer,
-            quantity: quantity,
-            method: this.props.method,
-            price: quantity * PRICE
+            date: "",
+            quantity: 1,
+            method: "cash",
+            price: 10
         };
     }
 
@@ -41,7 +40,6 @@ export default class OrderEdit extends Component {
             });
     }
     handleSubmit(e) {
-        e.preventDefault();
         console.log("save");
         const url = this.state._id ? `${API_URL}/api/order/${this.state._id}` : `${API_URL}/api/order`;
         const options = {
@@ -55,7 +53,6 @@ export default class OrderEdit extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
-                this.setState(res.data);
                 if (this.state.method === "card") {
                     this.setState({ redirectToCard: true });
                 } else {
@@ -76,8 +73,7 @@ export default class OrderEdit extends Component {
     renderRedirect = () => {
         if (this.state.redirectToCard && !this.state.isPayed) {
             return <Redirect to={`/cardpayment/${this.state._id}`} />;
-        }
-        if (this.state.redirectToOrders) {
+        } else if (this.state.redirectToOrders || this.state.redirectToCard) {
             return <Redirect to="/orders" />;
         }
     };
@@ -86,7 +82,7 @@ export default class OrderEdit extends Component {
         return (
             <div className="content formClass">
                 {this.renderRedirect()}
-                <Form onSubmit={e => this.handleSubmit(e)}>
+                <Form>
                     <Form.Group controlId="forDate">
                         <Form.Label>Date</Form.Label>
                         <Form.Control type="date" name="date" value={this.state.date} onChange={this.onChange} required />
@@ -103,7 +99,7 @@ export default class OrderEdit extends Component {
                         </Form.Control>
                     </Form.Group>
 
-                    <Button type="submit" variant="secondary">
+                    <Button type="button" onClick={this.handleSubmit} variant="secondary">
                         Order
                     </Button>
                 </Form>

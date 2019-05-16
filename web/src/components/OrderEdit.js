@@ -55,6 +55,7 @@ export default class OrderEdit extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
+                this.setState(res.data);
                 if (this.state.method === "card") {
                     this.setState({ redirectToCard: true });
                 } else {
@@ -73,8 +74,8 @@ export default class OrderEdit extends Component {
     }
 
     renderRedirect = () => {
-        if (this.state.redirectToCard) {
-            return <Redirect to="/cardpayment" />;
+        if (this.state.redirectToCard && !this.state.isPayed) {
+            return <Redirect to={`/cardpayment/${this.state._id}`} />;
         }
         if (this.state.redirectToOrders) {
             return <Redirect to="/orders" />;

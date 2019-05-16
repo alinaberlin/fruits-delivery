@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import "react-credit-cards/lib/styles.scss";
 import Card from "react-credit-cards";
 import { Redirect } from "react-router-dom";
-
+import { API_URL } from "../../config";
+import axios from "axios";
+import Moment from "moment";
 import { formatCreditCardNumber, formatCVC, formatExpirationDate, formatFormData } from "./utils";
 import styles from "./styles.css";
+
+const PRICE = 10;
 
 export default class CardPayment extends Component {
     constructor(props) {
@@ -19,9 +23,29 @@ export default class CardPayment extends Component {
         cvc: "",
         issuer: "",
         focused: "",
-        formData: null
+        formData: null,
+        order: {}
     };
-
+    componentDidMount() {
+        const params = this.props.match.params;
+        const url = `${API_URL}/api/order/${params.orderId}`;
+        const options = {
+            method: "get",
+            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            url
+        };
+        console.log("Mount payment");
+        axios(options)
+            .then(res => {
+                const order = res.data;
+                order.date = Moment(order.date).format("YYYY-MM-DD");
+                console.log(res.data);
+                this.setState({ order: order });
+            })
+            .catch(e => {
+                console.log("Error", e);
+            });
+    }
     handleCallback = ({ issuer }, isValid) => {
         if (isValid) {
             this.setState({ issuer });
@@ -67,6 +91,29 @@ export default class CardPayment extends Component {
     };
 
     paySuccessful() {
+        const url = `${API_URL}/api/order/${this.state.order._id}`;
+        const order = this.state.order;
+        order.isPayed = true;
+        const options = {
+            method: "put",
+            headers: { "content-type": "application/json", authorization: `Bearer ${localStorage.getItem("token")}` },
+            data: order,
+            url
+        };
+        axios(options)
+            .then(res => {
+                console.log(JSON.stringify(res));
+                this.setState(res.data);
+                if (this.state.method === "card") {
+                    this.setState({ redirectToCard: true });
+                } else {
+                    this.setState({ redirectToOrders: true });
+                }
+            })
+            .catch(e => {
+                console.log("Error", e);
+            });
+
         const state = this.state;
         state.redirect = true;
         this.setState(state);
@@ -80,6 +127,9 @@ export default class CardPayment extends Component {
                 {this.renderRedirect()}
                 <div className="App-payment">
                     <h1>Pay by Card</h1>
+                    <h3>
+                        {this.state.order.date} ({this.state.order.quantity * PRICE} &euro;)
+                    </h3>
                     <Card number={number} name={name} expiry={expiry} cvc={cvc} focused={focused} callback={this.handleCallback} />
                     <form ref={c => (this.form = c)} onSubmit={this.handleSubmit}>
                         <div className="form-group">

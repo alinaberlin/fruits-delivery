@@ -34,6 +34,7 @@ export default class OrdersHistory extends Component {
                             <th>Date</th>
                             <th>Quantity</th>
                             <th>Payment method</th>
+                            <th>Payed</th>
                             <th>Edit</th>
                         </tr>
                     </thead>
@@ -44,6 +45,7 @@ export default class OrdersHistory extends Component {
                                     <td>{Moment(order.date).format("YYYY-MM-DD")}</td>
                                     <td>{order.quantity}</td>
                                     <td>{order.method}</td>
+                                    <td>{order.isPayed ? "Yes" : "No"}</td>
                                     <td>
                                         <Link to={`/order/${order._id}`}>Edit</Link>
                                     </td>

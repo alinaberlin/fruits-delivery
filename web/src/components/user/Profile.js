@@ -9,7 +9,7 @@ export default class Profile extends Component {
         const url = `${API_URL}/api/me`;
         const options = {
             method: "get",
-            headers: { "content-type": "application/json", authorization: `Bearer ${this.props.token}` },
+            headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             url
         };
         axios(options)
@@ -28,8 +28,8 @@ export default class Profile extends Component {
                     <ListGroup.Item>First Name: {this.state.firstName}</ListGroup.Item>
                     <ListGroup.Item>Last Name: {this.state.firstName}</ListGroup.Item>
                     <ListGroup.Item>Email: {this.state.email}</ListGroup.Item>
-                    <ListGroup.Item>City: {this.state.city}</ListGroup.Item>
-                    <ListGroup.Item>Street: {this.state.street}</ListGroup.Item>
+                    <ListGroup.Item>City: {this.state.address.city}</ListGroup.Item>
+                    <ListGroup.Item>Street: {this.state.address.street}</ListGroup.Item>
                 </ListGroup>
             </div>
         );

@@ -54,7 +54,8 @@ class Login extends Component {
                     JSON.stringify({
                         token: res.data.token,
                         user: {
-                            isAdmin: res.data.user.admin
+                            isAdmin: res.data.user.admin,
+                            address: res.data.user.address
                         }
                     })
                 );

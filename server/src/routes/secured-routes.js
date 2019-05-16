@@ -16,29 +16,28 @@ router.get("/order", async (req, res, next) => {
         });
 });
 
-// router.get("/orders", async (req, res, next) => {
-//     const query = {};
+router.get("/orders", async (req, res, next) => {
+    const query = {};
 
-//     if (req.query.date) {
-//         const start = moment(req.query.date)
-//             .startOf("day")
-//             .format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-//         const end = moment(req.query.date)
-//             .endOf("day")
-//             .format("YYYY-MM-DDTHH:mm:ss.SSSZ");
-//         query.date = { $gte: start, $lt: end };
-//     }
+    if (req.query.date) {
+        const start = moment(req.query.date)
+            .startOf("day")
+            .format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+        const end = moment(req.query.date)
+            .endOf("day")
+            .format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+        query.date = { $gte: start, $lt: end };
+    }
 
-//     Order.find(query)
-//         .populate({
-//             path: "costumer"
-//         })
-//         .then(result => res.json(result))
-//         .catch(error => {
-//             res.status(500);
-//             res.json(error);
-//         });
-// });
+    Order.find(query)
+        .populate({
+            path: "costumer"
+        }).then(result => res.json(result))
+        .catch(error => {
+            res.status(500);
+            res.json(error);
+        });
+});
 
 router.get("/order/:id", async (req, res, next) => {
     Order.findById(req.params["id"])

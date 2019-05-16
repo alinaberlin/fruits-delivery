@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 
 class Header extends Component {
@@ -9,9 +10,7 @@ class Header extends Component {
         this.renderUserMenu = this.renderUserMenu.bind(this);
     }
 
-    componentDidMount() {
-        
-    }
+    componentDidMount() {}
 
     logout() {
         localStorage.removeItem("user");
@@ -21,34 +20,35 @@ class Header extends Component {
         if (this.props.isLoggedIn && !this.props.isLoggedIn.user.isAdmin) {
             return (
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">
+                    <Link to="/">
                         <h4 style={{ color: "orange" }}>About us</h4>
-                    </Nav.Link>
+                    </Link>
 
-                    <Nav.Link href="/orders">
+                    <Link to="/orders">
                         <h4 style={{ color: "orange" }}>My Orders</h4>
-                    </Nav.Link>
-                    <Nav.Link href="/order">
+                    </Link>
+                    <Link to="/order">
                         <h4 style={{ color: "orange" }}>Order Now</h4>
-                    </Nav.Link>
+                    </Link>
                 </Nav>
             );
         } else if (this.props.isLoggedIn && this.props.isLoggedIn.user.isAdmin) {
-            return (<Nav className="mr-auto">
-
-                    <Nav.Link href="/orders">
+            return (
+                <Nav className="mr-auto">
+                    <Link to="/orders">
                         <h4 style={{ color: "orange" }}>All Orders</h4>
-                    </Nav.Link>
-                    <Nav.Link href="/agenda">
+                    </Link>
+                    <Link to="/agenda">
                         <h4 style={{ color: "orange" }}>Agenda</h4>
-                    </Nav.Link>
-                </Nav>)
+                    </Link>
+                </Nav>
+            );
         } else {
             return (
                 <Nav className="mr-auto">
-                    <Nav.Link href="/">
+                    <Link to="/">
                         <h4 style={{ color: "orange" }}>About us</h4>
-                    </Nav.Link>
+                    </Link>
                 </Nav>
             );
         }
@@ -57,23 +57,23 @@ class Header extends Component {
         if (this.props.isLoggedIn) {
             return (
                 <Nav className="inline">
-                    <Nav.Link href="/me" className="login">
+                    <Link to="/me" className="login">
                         Profile
-                    </Nav.Link>
-                    <Nav.Link href="/login" className="login" onClick={this.logout}>
+                    </Link>
+                    <Link to="/login" className="login" onClick={this.logout}>
                         Logout
-                    </Nav.Link>
+                    </Link>
                 </Nav>
             );
         } else {
             return (
                 <Nav className="inline">
-                    <Nav.Link href="/register" className="login">
+                    <Link to="/register" className="login">
                         Register
-                    </Nav.Link>
-                    <Nav.Link href="/login" className="login">
+                    </Link>
+                    <Link to="/login" className="login">
                         Login
-                    </Nav.Link>
+                    </Link>
                 </Nav>
             );
         }
@@ -82,7 +82,7 @@ class Header extends Component {
         return (
             <div>
                 <Navbar bg="success" expand="lg" fixed="top">
-                    <Navbar.Brand href="/">
+                    <Navbar.Brand to="/">
                         <h1 className="fruits">Happy Fruits</h1>
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />

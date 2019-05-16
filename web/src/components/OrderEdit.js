@@ -22,12 +22,17 @@ export default class OrderEdit extends Component {
 
     componentDidMount() {
         const params = this.props.match.params;
+
+        if (!params.id) return;
+
         const url = `${API_URL}/api/order/${params.id}`;
+
         const options = {
             method: "get",
             headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
             url
         };
+
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
@@ -53,7 +58,7 @@ export default class OrderEdit extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
-                const order = res.data
+                const order = res.data;
                 if (this.state.method === "card" && !order.isPayed) {
                     this.setState({ ...order, redirectToCard: true });
                 } else {

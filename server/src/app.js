@@ -1,7 +1,8 @@
 "use strict";
-
+require("dotenv").config();
 const express = require("express");
 const app = express();
+const path = require("path");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const mongoConnectURI = process.env.MONGOURL || "mongodb://localhost/fruits-delivery";
@@ -30,11 +31,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/api", user);
 app.use("/api", passport.authenticate("jwt", { session: false }), securedRoutes);
 app.use("/auth", auth);
-app.get("/", (req, res) => res.json({ greeting: "Hello World!" }));
 
+app.use((req, res) => {
+    res.sendFile(__dirname + "/public/index.html");
+});
 // generate certificates: openssl req -nodes -new -x509 -keyout server.key -out server.cert
 const httpServer = http.createServer(app);
 

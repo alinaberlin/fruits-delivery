@@ -11,8 +11,8 @@ export default class OrdersHistory extends Component {
         orders: []
     };
     componentDidMount() {
-        const isAdmin = JSON.parse(localStorage.getItem("user")).user.isAdmin
-        const url = isAdmin ? `${API_URL}/api/orders`:`${API_URL}/api/order`;
+        const isAdmin = JSON.parse(localStorage.getItem("user")) && JSON.parse(localStorage.getItem("user")).user.isAdmin;
+        const url = isAdmin ? `${API_URL}/api/orders` : `${API_URL}/api/order`;
         const options = {
             method: "get",
             headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
@@ -37,7 +37,7 @@ export default class OrdersHistory extends Component {
                             <th>Quantity</th>
                             <th>Payment method</th>
                             <th>Payed</th>
-                            {this.state.isAdmin ? '': <th>Edit</th>}
+                            {this.state.isAdmin ? "" : <th>Edit</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -48,10 +48,13 @@ export default class OrdersHistory extends Component {
                                     <td>{order.quantity}</td>
                                     <td>{order.method}</td>
                                     <td>{order.isPayed ? "Yes" : "No"}</td>
-                                    {this.state.isAdmin ? '': 
-                                    <td>
-                                        <Link to={`/order/${order._id}`}>Edit</Link>
-                                    </td>}
+                                    {this.state.isAdmin ? (
+                                        ""
+                                    ) : (
+                                        <td>
+                                            <Link to={`/order/${order._id}`}>Edit</Link>
+                                        </td>
+                                    )}
                                 </tr>
                             );
                         })}

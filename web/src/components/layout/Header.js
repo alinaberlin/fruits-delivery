@@ -20,15 +20,21 @@ class Header extends Component {
         if (this.props.isLoggedIn && !this.props.isLoggedIn.user.isAdmin) {
             return (
                 <Nav className="mr-auto">
-                    <Link to="/">
-                        <h4  className = 'pix'style={{ color: "orange" }}>About us</h4>
+                    <Link to="/us">
+                        <h4 className="pix" style={{ color: "orange" }}>
+                            About us
+                        </h4>
                     </Link>
 
                     <Link to="/orders">
-                        <h4 className = 'pix' style={{ color: "orange" }}>My Orders</h4>
+                        <h4 className="pix" style={{ color: "orange" }}>
+                            My Orders
+                        </h4>
                     </Link>
                     <Link to="/order">
-                        <h4 className = 'pix' style={{ color: "orange" }}>Order Now</h4>
+                        <h4 className="pix" style={{ color: "orange" }}>
+                            Order Now
+                        </h4>
                     </Link>
                 </Nav>
             );
@@ -46,7 +52,7 @@ class Header extends Component {
         } else {
             return (
                 <Nav className="mr-auto">
-                    <Link to="/">
+                    <Link to="/us">
                         <h4 style={{ color: "orange" }}>About us</h4>
                     </Link>
                 </Nav>

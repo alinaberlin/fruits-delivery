@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
-import Number from "./components/landing/Number";
+//import Number from "./components/landing/Number";
 import Landing from "./components/landing/Landing";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/signin/Login";
@@ -13,6 +13,7 @@ import OrdersHistory from "./components/OrdersHistory";
 import CardPayment from "./components/paymentMethod/CardPayment";
 import Profile from "./components/user/Profile";
 import Agenda from "./components/Agenda";
+import Us from './components/landing/Us'
 
 class App extends Component {
     constructor(props) {
@@ -29,9 +30,9 @@ class App extends Component {
             <div className="App">
                 <Header isLoggedIn={this.state.isLoggedIn} />
                 <div className="container">
-                    <Number />
                     <Switch>
                         <Route exact path="/" component={Landing} />
+                        <Route exact path="/us" component={Us} />
                         <Route exact path="/login" render={props => <Login {...props} handleLogin={this.handleLogin} />} />
                         <Route exact path="/register" component={Register} />
                         <Route exact path="/map" component={Map} />

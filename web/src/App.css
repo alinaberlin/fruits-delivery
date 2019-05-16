@@ -1,9 +1,18 @@
+body {
+    height: 100%;
+}
+
 .App {
     text-align: center;
     background-image: url("/images/tablou.jpg");
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
     background-position: center center;
+    height: 100;
+}
+
+#landing {
     height: 100vh;
 }
 
@@ -63,9 +72,16 @@ h2 {
 .boxed {
     font-family: fantasy;
 }
-.pix{
+.pix {
     padding-left: 10px;
 }
-.login{
+.login {
     padding-left: 30px;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }

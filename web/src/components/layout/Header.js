@@ -28,7 +28,7 @@ class Header extends Component {
     }
 
     renderUserMenu() {
-        if (this.state.isLoggedIn) {
+        if (this.state.isLoggedIn && !this.state.isAdmin) {
             return (
                 <Nav className="mr-auto">
                     <Nav.Link href="/">

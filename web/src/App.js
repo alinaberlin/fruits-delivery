@@ -12,16 +12,17 @@ import OrderEdit from "./components/OrderEdit";
 import OrdersHistory from "./components/OrdersHistory";
 import CardPayment from "./components/paymentMethod/CardPayment";
 import Profile from "./components/user/Profile";
+import Agenda from "./components/Agenda";
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = { isLoggedIn: localStorage.getItem("user") };
+        this.state = { isLoggedIn: JSON.parse(localStorage.getItem("user")) };
         this.handleLogin = this.handleLogin.bind(this);
     }
 
     handleLogin() {
-        this.setState({ isLoggedIn: localStorage.getItem("user") });
+        this.setState({ isLoggedIn: JSON.parse(localStorage.getItem("user")) });
     }
     render() {
         return (
@@ -41,6 +42,7 @@ class App extends Component {
                                 return this.state.isLoggedIn ? <CardPayment {...props} /> : <Redirect to="/login" />;
                             }}
                         />
+
                         <Route
                             exact
                             path="/me"
@@ -68,6 +70,13 @@ class App extends Component {
                             path="/orders"
                             render={props => {
                                 return this.state.isLoggedIn ? <OrdersHistory {...props} /> : <Redirect to="/login" />;
+                            }}
+                        />
+                        <Route
+                            exact
+                            path="/agenda"
+                            render={props => {
+                                return this.state.isLoggedIn ? <Agenda {...props} /> : <Redirect to="/login" />;
                             }}
                         />
                     </Switch>

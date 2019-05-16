@@ -2,6 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Order = require("../models/Order");
+const moment = require('moment');
 
 router.get("/order", async (req, res, next) => {
     let userId = req.user._id;
@@ -14,7 +15,18 @@ router.get("/order", async (req, res, next) => {
 });
 
 router.get("/orders", async (req, res, next) => {
-    Order.find({})
+    const query = {};
+    
+    if (req.query.date) {
+        const start = moment(req.query.date).startOf('day').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+        const end = moment(req.query.date).endOf('day').format("YYYY-MM-DDTHH:mm:ss.SSSZ");
+        query.date = {$gte: start, $lt: end};
+    }
+    console.log('Query is', query);
+    Order.find(query)
+    .populate({ 
+        path: 'customer'
+     })
         .then(result => res.json(result))
         .catch(error => {
             res.status(500);

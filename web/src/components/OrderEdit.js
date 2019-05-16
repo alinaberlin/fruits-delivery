@@ -53,8 +53,9 @@ export default class OrderEdit extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
-                if (this.state.method === "card") {
-                    this.setState({ redirectToCard: true });
+                const order = res.data
+                if (this.state.method === "card" && !order.isPayed) {
+                    this.setState({ ...order, redirectToCard: true });
                 } else {
                     this.setState({ redirectToOrders: true });
                 }

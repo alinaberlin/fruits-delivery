@@ -7,20 +7,10 @@ class Header extends Component {
         super(props);
         this.renderLoginLogout = this.renderLoginLogout.bind(this);
         this.renderUserMenu = this.renderUserMenu.bind(this);
-        this.state = {
-            isLoggedIn: false,
-            isAdmin: false
-        };
     }
 
     componentDidMount() {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const isLoggedIn = user ? true : false;
-        const isAdmin = isLoggedIn ? user.isAdmin : false;
-        this.setState({
-            isLoggedIn,
-            isAdmin
-        });
+        
     }
 
     logout() {
@@ -28,7 +18,7 @@ class Header extends Component {
     }
 
     renderUserMenu() {
-        if (this.state.isLoggedIn && !this.state.isAdmin) {
+        if (this.props.isLoggedIn && !this.props.isLoggedIn.user.isAdmin) {
             return (
                 <Nav className="mr-auto">
                     <Nav.Link href="/">
@@ -43,6 +33,16 @@ class Header extends Component {
                     </Nav.Link>
                 </Nav>
             );
+        } else if (this.props.isLoggedIn && this.props.isLoggedIn.user.isAdmin) {
+            return (<Nav className="mr-auto">
+
+                    <Nav.Link href="/orders">
+                        <h4 style={{ color: "orange" }}>All Orders</h4>
+                    </Nav.Link>
+                    <Nav.Link href="/agenda">
+                        <h4 style={{ color: "orange" }}>Agenda</h4>
+                    </Nav.Link>
+                </Nav>)
         } else {
             return (
                 <Nav className="mr-auto">

@@ -7,10 +7,12 @@ import Moment from "moment";
 
 export default class OrdersHistory extends Component {
     state = {
+        isAdmin: false,
         orders: []
     };
     componentDidMount() {
-        const url = `${API_URL}/api/order`;
+        const isAdmin = JSON.parse(localStorage.getItem("user")).user.isAdmin
+        const url = isAdmin ? `${API_URL}/api/orders`:`${API_URL}/api/order`;
         const options = {
             method: "get",
             headers: { "content-type": "application/json", authorization: `Bearer ${JSON.parse(localStorage.getItem("user")).token}` },
@@ -19,7 +21,7 @@ export default class OrdersHistory extends Component {
         axios(options)
             .then(res => {
                 console.log(JSON.stringify(res));
-                this.setState({ orders: res.data });
+                this.setState({ isAdmin: isAdmin, orders: res.data });
             })
             .catch(e => {
                 console.log("Error", e);
@@ -35,7 +37,7 @@ export default class OrdersHistory extends Component {
                             <th>Quantity</th>
                             <th>Payment method</th>
                             <th>Payed</th>
-                            <th>Edit</th>
+                            {this.state.isAdmin ? '': <th>Edit</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -46,9 +48,10 @@ export default class OrdersHistory extends Component {
                                     <td>{order.quantity}</td>
                                     <td>{order.method}</td>
                                     <td>{order.isPayed ? "Yes" : "No"}</td>
+                                    {this.state.isAdmin ? '': 
                                     <td>
                                         <Link to={`/order/${order._id}`}>Edit</Link>
-                                    </td>
+                                    </td>}
                                 </tr>
                             );
                         })}

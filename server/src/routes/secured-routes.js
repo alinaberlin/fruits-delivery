@@ -13,6 +13,15 @@ router.get("/order", async (req, res, next) => {
         });
 });
 
+router.get("/orders", async (req, res, next) => {
+    Order.find({})
+        .then(result => res.json(result))
+        .catch(error => {
+            res.status(500);
+            res.json(error);
+        });
+});
+
 router.get("/order/:id", async (req, res, next) => {
     Order.findById(req.params["id"])
         .then(result => res.json(result))

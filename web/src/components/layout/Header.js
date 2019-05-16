@@ -7,14 +7,28 @@ class Header extends Component {
         super(props);
         this.renderLoginLogout = this.renderLoginLogout.bind(this);
         this.renderUserMenu = this.renderUserMenu.bind(this);
+        this.state = {
+            isLoggedIn: false,
+            isAdmin: false
+        };
+    }
+
+    componentDidMount() {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const isLoggedIn = user ? true : false;
+        const isAdmin = isLoggedIn ? user.isAdmin : false;
+        this.setState({
+            isLoggedIn,
+            isAdmin
+        });
     }
 
     logout() {
-        localStorage.removeItem("token");
+        localStorage.removeItem("user");
     }
 
     renderUserMenu() {
-        if (this.props.isLoggedIn) {
+        if (this.state.isLoggedIn) {
             return (
                 <Nav className="mr-auto">
                     <Nav.Link href="/">

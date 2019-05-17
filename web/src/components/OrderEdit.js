@@ -16,7 +16,8 @@ export default class OrderEdit extends Component {
             date: "",
             quantity: 1,
             method: "cash",
-            price: 10
+            price: 10,
+            isPayed: false
         };
     }
 
@@ -104,10 +105,13 @@ export default class OrderEdit extends Component {
                             <option>card</option>
                         </Form.Control>
                     </Form.Group>
-
-                    <Button type="button" onClick={this.handleSubmit} variant="secondary">
-                        Order
-                    </Button>
+                    {!this.state.isPayed ? (
+                        <Button type="button" onClick={this.handleSubmit} variant="secondary">
+                            Order
+                        </Button>
+                    ) : (
+                        ""
+                    )}
                 </Form>
             </div>
         );

@@ -69,7 +69,7 @@ router.post("/order", (req, res, next) => {
                     from: "happyfruitsironhack@gmail.com", // sender address
                     to: user.email, // list of receivers
                     subject: "Hello ✔", // Subject line
-                    text: "Your order has been received, it will be dispatched shortly", // plain text body
+                    text: `Your order has been received, at ${result.date} will receive you order in ${result.quantity }. Hope you enjoy it.`, // plain text body
                     html: "<b>Thank you for buying fruits from us! Your order has been received, it will be dispatched shortly</b>" // html body
                 });
             });
